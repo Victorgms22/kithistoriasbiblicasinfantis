@@ -7,7 +7,7 @@ export function buildCheckoutUrl(base: string, params: Record<string, string>): 
   const keys = Object.keys(params);
   if (keys.length === 0) return base;
   const url = new URL(base);
-  for (const k of keys) url.searchParams.set(k, params[k]);
+  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
   return url.toString();
 }
 

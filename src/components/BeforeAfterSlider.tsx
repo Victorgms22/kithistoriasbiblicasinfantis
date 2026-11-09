@@ -36,7 +36,7 @@ export function BeforeAfterSlider({ leftSrc, leftAlt, rightSrc, rightAlt }: Prop
     const map: Record<string, number> = { ArrowLeft: Math.max(0, pos - 5), ArrowRight: Math.min(100, pos + 5), Home: 0, End: 100 };
     if (e.key in map) {
       e.preventDefault();
-      setPos(map[e.key]);
+      setPos(map[e.key] ?? pos);
     }
   };
 

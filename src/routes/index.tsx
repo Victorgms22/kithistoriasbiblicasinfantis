@@ -102,10 +102,26 @@ function Heading({ eyebrow, title, desc }: { eyebrow?: string; title: string; de
   );
 }
 
+function useCountdown(start: number) {
+  const [left, setLeft] = useState(start);
+  useEffect(() => {
+    const id = setInterval(() => setLeft((s) => (s > 0 ? s - 1 : 0)), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const m = String(Math.floor(left / 60)).padStart(2, "0");
+  const s = String(left % 60).padStart(2, "0");
+  return `${m}:${s}`;
+}
+
 function Index() {
   const checkout = useCheckoutUrl();
+  const timer = useCountdown(14 * 60 + 32);
   return (
     <main className="overflow-x-hidden">
+      <div className="sticky top-0 z-50 bg-foreground px-4 py-2.5 text-center text-sm font-extrabold tracking-wide text-background">
+        🔥 PROMOÇÃO DE BLACK FRIDAY • termina em{" "}
+        <span className="ml-1 rounded-md bg-accent px-2 py-0.5 font-mono text-accent-foreground">{timer}</span>
+      </div>
       {/* Hero */}
       <section className="bg-warm px-5 pb-16 pt-10 md:pb-24 md:pt-16">
         <div className="mx-auto max-w-[1200px]">
@@ -127,8 +143,10 @@ function Index() {
               </p>
               <div className="mt-8 flex flex-col items-start gap-4">
                 <p className="text-foreground">
-                  A partir de <span className="font-serif text-3xl font-bold text-primary">R$ 19,90</span>
+                  De <span className="text-muted-foreground line-through">R$ 97,90</span> por apenas{" "}
+                  <span className="font-serif text-3xl font-bold text-primary">R$ 19,90</span>
                 </p>
+                <p className="text-sm font-bold text-secondary">Oferta termina em <span className="font-mono">{timer}</span></p>
                 <a href="#ofertas" className={ctaCls}>QUERO CONHECER O MATERIAL</a>
                 <p className="text-sm text-muted-foreground">Material digital em PDF • Pronto para imprimir</p>
               </div>
@@ -265,7 +283,12 @@ function Index() {
             <span className="rounded-full bg-accent px-4 py-1 text-xs font-extrabold tracking-wider text-accent-foreground">PRODUTO PRINCIPAL</span>
             <h3 className="mt-5 text-2xl font-bold text-primary md:text-3xl">Histórias Bíblicas Infantis para Imprimir</h3>
             <p className="mt-2 text-muted-foreground">Seu primeiro passo para ensinar histórias bíblicas de maneira divertida.</p>
-            <p className="mt-6 font-serif text-5xl font-bold text-primary">R$ 19,90</p>
+            <p className="mt-6 text-lg text-muted-foreground">De <span className="line-through">R$ 97,90</span> por apenas</p>
+            <p className="font-serif text-5xl font-bold text-primary">R$ 19,90</p>
+            <div className="mt-4 inline-flex items-center gap-2 rounded-xl bg-foreground px-4 py-2 text-sm font-bold text-background">
+              <Clock size={16} /> Black Friday termina em
+              <span className="rounded-md bg-accent px-2 py-0.5 font-mono text-accent-foreground">{timer}</span>
+            </div>
             <ul className="mt-6 space-y-3">
               {["Material digital em PDF", "Histórias bíblicas infantis", "Conteúdo educativo", "Acesso digital após confirmação do pagamento", "Pronto para imprimir"].map((f) => (
                 <li key={f} className="flex gap-3"><Check className="shrink-0 text-sage" size={20} />{f}</li>

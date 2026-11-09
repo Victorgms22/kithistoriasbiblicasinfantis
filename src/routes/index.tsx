@@ -24,9 +24,12 @@ import bibliaImg from "@/assets/biblia-acao.jpg";
 import bingoImg from "@/assets/bingo.jpg";
 import memoriaImg from "@/assets/memoria.jpg";
 import jogosImg from "@/assets/jogos.jpg";
+import criancaAsset from "@/assets/crianca-celular.png.asset.json";
+import maeLendoAsset from "@/assets/mae-lendo.png.asset.json";
+import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
+import { CHECKOUT_BASE, buildCheckoutUrl, captureTracking, trackBuyClick } from "@/lib/checkout";
 
-// Replace with the real checkout link. UTM/query params from the visit are appended automatically.
-const CHECKOUT_URL = "INSERIR_LINK_CHECKOUT_PRINCIPAL";
+const OG_IMAGE = `https://kithistoriasbiblicasinfantis.lovable.app${maeLendoAsset.url}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,7 +46,9 @@ export const Route = createFileRoute("/")({
         content: "Transforme o aprendizado da Palavra de Deus em momentos especiais com seus filhos.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
   }),
   component: Index,
@@ -67,10 +72,9 @@ const faq = [
 ];
 
 function useCheckoutUrl() {
-  const [url, setUrl] = useState(CHECKOUT_URL);
+  const [url, setUrl] = useState(CHECKOUT_BASE);
   useEffect(() => {
-    const qs = window.location.search;
-    if (qs) setUrl(CHECKOUT_URL + (CHECKOUT_URL.includes("?") ? "&" : "?") + qs.slice(1));
+    setUrl(buildCheckoutUrl(CHECKOUT_BASE, captureTracking(window.location.search)));
   }, []);
   return url;
 }
@@ -131,6 +135,23 @@ function Index() {
             </div>
             <img src={heroImg} width={1200} height={1008} alt="Coleção impressa de Histórias Bíblicas Infantis com capa e páginas ilustradas" className="w-full rounded-3xl shadow-soft" />
           </div>
+        </div>
+      </section>
+
+      {/* Before / after */}
+      <section className="bg-card px-5 py-16 md:py-24">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 className="mx-auto mb-10 max-w-3xl text-center font-[Poppins] text-3xl font-extrabold leading-snug text-[#2B1B17] md:text-4xl">
+            Seu filho está crescendo em um mundo onde{" "}
+            <mark className="rounded-[6px] bg-[#F2D06B] px-1.5 text-[#6B1F1A] [box-decoration-break:clone]">todos</mark>{" "}
+            <mark className="rounded-[6px] bg-[#F2D06B] px-1.5 text-[#6B1F1A] [box-decoration-break:clone]">querem a atenção dele.</mark>
+          </h2>
+          <BeforeAfterSlider
+            leftSrc={criancaAsset.url}
+            leftAlt="Menino sentado sozinho no sofá, com expressão séria, mexendo em um tablet"
+            rightSrc={maeLendoAsset.url}
+            rightAlt="Mãe e filho sorrindo juntos no sofá enquanto leem uma Bíblia infantil ilustrada"
+          />
         </div>
       </section>
 
@@ -250,7 +271,7 @@ function Index() {
                 <li key={f} className="flex gap-3"><Check className="shrink-0 text-sage" size={20} />{f}</li>
               ))}
             </ul>
-            <a href={checkout} className={`${ctaCls} mt-8 w-full`}>QUERO GARANTIR MEU MATERIAL</a>
+            <a href={checkout} onClick={trackBuyClick} className={`${ctaCls} mt-8 w-full`}>QUERO GARANTIR MEU MATERIAL</a>
             <p className="mt-3 text-center text-xs text-muted-foreground">Pagamento seguro • Produto digital</p>
           </div>
           <div>

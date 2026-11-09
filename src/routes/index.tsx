@@ -141,7 +141,7 @@ function Index() {
       {/* Before / after */}
       <section className="bg-card px-5 py-16 md:py-24">
         <div className="mx-auto max-w-[1200px]">
-          <h2 className="mx-auto mb-10 max-w-3xl text-center font-[Poppins] text-3xl font-extrabold leading-snug text-[#2B1B17] md:text-4xl">
+          <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="mx-auto mb-10 max-w-3xl text-center text-3xl font-extrabold leading-snug text-[#2B1B17] md:text-4xl">
             Seu filho está crescendo em um mundo onde{" "}
             <mark className="rounded-[6px] bg-[#F2D06B] px-1.5 text-[#6B1F1A] [box-decoration-break:clone]">todos</mark>{" "}
             <mark className="rounded-[6px] bg-[#F2D06B] px-1.5 text-[#6B1F1A] [box-decoration-break:clone]">querem a atenção dele.</mark>

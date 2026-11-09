@@ -55,7 +55,7 @@ export function BeforeAfterSlider({ leftSrc, leftAlt, rightSrc, rightAlt }: Prop
       onPointerCancel={onUp}
       onKeyDown={onKey}
       style={{ touchAction: "pan-y" }}
-      className="relative mx-auto aspect-[4/5] w-full max-w-[1040px] cursor-ew-resize select-none overflow-hidden rounded-[16px] shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring sm:aspect-[4/3]"
+      className="relative mx-auto aspect-[4/5] w-full max-w-[1040px] cursor-ew-resize select-none overflow-hidden rounded-[16px] shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring sm:aspect-[4/3] lg:aspect-[16/10]"
     >
       <img src={rightSrc} alt={rightAlt} loading="lazy" draggable={false} className="absolute inset-0 h-full w-full select-none object-cover" />
       <img

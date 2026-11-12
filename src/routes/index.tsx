@@ -102,6 +102,48 @@ function Heading({ eyebrow, title, desc }: { eyebrow?: string; title: string; de
   );
 }
 
+function MobileBuyBar({ checkout }: { checkout: string }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const offer = document.getElementById("ofertas");
+    let offerVisible = false;
+    let scrolled = false;
+    const update = () => setVisible(scrolled && !offerVisible);
+    const onScroll = () => {
+      scrolled = window.scrollY > window.innerHeight;
+      update();
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const observer = offer
+      ? new IntersectionObserver(([entry]) => {
+          offerVisible = entry.isIntersecting;
+          update();
+        })
+      : null;
+    if (offer && observer) observer.observe(offer);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      observer?.disconnect();
+    };
+  }, []);
+  return (
+    <div
+      className={`fixed inset-x-0 bottom-0 z-50 bg-foreground/95 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur transition-transform duration-300 md:hidden ${
+        visible ? "translate-y-0" : "translate-y-full"
+      }`}
+    >
+      <a
+        href={checkout}
+        onClick={trackBuyClick}
+        className="flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-extrabold tracking-wide text-accent-foreground"
+      >
+        R$ 19,90 • COMPRAR AGORA
+      </a>
+    </div>
+  );
+}
+
 function useCountdown(start: number) {
   const [left, setLeft] = useState(start);
   useEffect(() => {

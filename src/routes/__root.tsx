@@ -83,12 +83,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Pequenos com Deus" },
       { name: "description", content: "Histórias bíblicas infantis para imprimir." },
-      { name: "author", content: "Lovable" },
       
       
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {

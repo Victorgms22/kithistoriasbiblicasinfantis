@@ -11,6 +11,9 @@ import {
   Check,
   Sparkles,
   Plus,
+  PencilLine,
+  Palette,
+  Repeat,
 } from "lucide-react";
 import {
   Accordion,
@@ -29,21 +32,21 @@ import maeLendoAsset from "@/assets/mae-lendo.png.asset.json";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { CHECKOUT_BASE, buildCheckoutUrl, captureTracking, trackBuyClick } from "@/lib/checkout";
 
-const OG_IMAGE = `https://kithistoriasbiblicasinfantis.lovable.app${maeLendoAsset.url}`;
+const OG_IMAGE = `https://kithistoriasbiblicasinfantis.lovable.app${heroImg}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Histórias Bíblicas Infantis para Imprimir | Pequenos com Deus" },
+      { title: "Histórias da Bíblia para ler, colorir e completar | Pequenos com Deus" },
       {
         name: "description",
         content:
-          "Material digital em PDF com histórias bíblicas infantis para imprimir. Use em casa, na igreja ou na Escola Bíblica Infantil. A partir de R$ 19,90.",
+          "PDF com histórias bíblicas ilustradas, atividades de completar frases e desenhos para colorir. Para imprimir em casa, na igreja ou na EBI. R$ 19,90.",
       },
-      { property: "og:title", content: "Histórias Bíblicas Infantis para Imprimir" },
+      { property: "og:title", content: "Histórias da Bíblia para a criança ler, colorir e completar" },
       {
         property: "og:description",
-        content: "Transforme o aprendizado da Palavra de Deus em momentos especiais com seus filhos.",
+        content: "Material interativo em PDF: histórias ilustradas, atividades e desenhos para colorir. Pronto para imprimir.",
       },
       { property: "og:type", content: "website" },
       { property: "og:image", content: OG_IMAGE },
@@ -68,6 +71,8 @@ const faq = [
   ["Para qual idade é indicado?", "O material é direcionado ao público infantil. Consulte a descrição do produto para verificar a faixa etária recomendada."],
   ["Posso utilizar na igreja ou Escola Bíblica Infantil?", "O uso deve respeitar as condições de licença disponibilizadas pelo vendedor."],
   ["Os materiais complementares estão incluídos?", "Não. Os materiais complementares são opcionais e podem ser adicionados separadamente no checkout."],
+  ["O material é só de ler?", "Não. Além das histórias bíblicas ilustradas, o material traz atividades de completar frases e desenhos para colorir."],
+  ["Como funciona a garantia?", "Você tem 7 dias após a compra para pedir o reembolso."],
   ["Posso comprar somente o produto principal?", "Sim. Os materiais complementares são opcionais. Você pode adquirir somente Histórias Bíblicas Infantis para Imprimir."],
 ];
 
@@ -174,14 +179,11 @@ function Index() {
             <div>
               <p className="mb-4 text-xs font-extrabold tracking-[0.2em] text-secondary">EDUCAÇÃO CRISTÃ INFANTIL</p>
               <h1 className="text-3xl font-bold leading-[1.15] text-primary md:text-5xl">
-                Histórias Bíblicas Infantis para Imprimir
+                Histórias da Bíblia para a criança ler, colorir e completar
               </h1>
-              <p className="mt-4 font-serif text-xl text-secondary md:text-2xl">
-                transforme o aprendizado da Palavra de Deus em momentos especiais com seus filhos!
-              </p>
-              <p className="mt-6 text-lg text-muted-foreground">
-                Apresente às crianças histórias incríveis da Bíblia de maneira leve, educativa e divertida. Um material
-                digital para utilizar em casa, na igreja ou na Escola Bíblica Infantil.
+              <p className="mt-5 text-lg text-muted-foreground">
+                Material digital em PDF com histórias bíblicas ilustradas e atividades interativas, para imprimir e fazer
+                em casa, na igreja ou na Escola Bíblica Infantil.
               </p>
               <div className="mt-8 flex flex-col items-start gap-4">
                 <p className="text-foreground">
@@ -189,14 +191,67 @@ function Index() {
                   <span className="font-serif text-3xl font-bold text-primary">R$ 19,90</span>
                 </p>
                 <p className="text-sm font-bold text-secondary">Oferta termina em <span className="font-mono">{timer}</span></p>
-                <a href={checkout} onClick={trackBuyClick} className={ctaCls}>QUERO CONHECER O MATERIAL</a>
-                <p className="text-sm text-muted-foreground">Material digital em PDF • Pronto para imprimir</p>
+                <a href={checkout} onClick={trackBuyClick} className={`${ctaCls} w-full sm:w-auto`}>QUERO O MATERIAL • R$ 19,90</a>
+                <p className="text-sm text-muted-foreground">Pagamento único • Acesso imediato • Garantia de 7 dias</p>
               </div>
             </div>
             <img src={heroImg} width={1200} height={1008} alt="Coleção impressa de Histórias Bíblicas Infantis com capa e páginas ilustradas" className="w-full rounded-3xl shadow-soft" />
           </div>
         </div>
       </section>
+
+      {/* Not only reading */}
+      <Section>
+        <Heading title="Mais que histórias: a criança participa" />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            [BookOpen, "Histórias bíblicas ilustradas", "Para ler e conversar em família."],
+            [PencilLine, "Completar frases", "Atividades para a criança responder e lembrar da história."],
+            [Palette, "Desenhos para colorir", "Para pintar enquanto a história é lembrada."],
+            [Repeat, "Para imprimir e refazer", "Imprima quantas vezes quiser."],
+          ].map(([Icon, t, d]) => {
+            const I = Icon as typeof BookOpen;
+            return (
+              <div key={t as string} className="rounded-2xl bg-card p-6 shadow-soft">
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-accent text-accent-foreground"><I size={22} /></span>
+                <h3 className="mt-5 text-lg font-bold text-primary">{t as string}</h3>
+                <p className="mt-2 text-muted-foreground">{d as string}</p>
+              </div>
+            );
+          })}
+        </div>
+      </Section>
+
+      {/* How it works */}
+      <Section className="bg-muted">
+        <Heading title="Como funciona" />
+        <ol className="grid gap-5 md:grid-cols-3">
+          {[
+            "Você faz a compra segura pelo checkout.",
+            "Recebe o acesso ao PDF após a confirmação do pagamento.",
+            "Imprime e faz as atividades com as crianças.",
+          ].map((t, i) => (
+            <li key={t} className="flex gap-4 rounded-2xl bg-card p-6">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary font-bold text-primary-foreground">{i + 1}</span>
+              <p className="font-semibold">{t}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* Inside */}
+      <Section>
+        <Heading title="Veja por dentro" />
+        <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0">
+          {[
+            [heroImg, "Capa e páginas ilustradas do material Histórias Bíblicas Infantis"],
+            [maeImg, "Página de história bíblica ilustrada sendo lida por mãe e filho"],
+            [bibliaImg, "Exemplo de página de atividade bíblica para a criança completar"],
+          ].map(([src, alt]) => (
+            <img key={alt} src={src} alt={alt} loading="lazy" className="aspect-[4/5] w-[78%] shrink-0 snap-center rounded-2xl object-cover shadow-soft md:w-full" />
+          ))}
+        </div>
+      </Section>
 
       {/* Before / after */}
       <section className="bg-card px-5 py-16 md:py-24">
@@ -332,7 +387,7 @@ function Index() {
               <span className="rounded-md bg-accent px-2 py-0.5 font-mono text-accent-foreground">{timer}</span>
             </div>
             <ul className="mt-6 space-y-3">
-              {["Material digital em PDF", "Histórias bíblicas infantis", "Conteúdo educativo", "Acesso digital após confirmação do pagamento", "Pronto para imprimir"].map((f) => (
+              {["Material digital em PDF", "Histórias bíblicas ilustradas", "Atividades de completar frases", "Desenhos para colorir", "Pronto para imprimir"].map((f) => (
                 <li key={f} className="flex gap-3"><Check className="shrink-0 text-sage" size={20} />{f}</li>
               ))}
             </ul>
@@ -378,6 +433,15 @@ function Index() {
         </div>
       </Section>
 
+      {/* Guarantee */}
+      <Section>
+        <div className="mx-auto max-w-2xl rounded-3xl border-2 border-sage bg-card p-8 text-center shadow-soft">
+          <ShieldCheck className="mx-auto text-sage" size={48} />
+          <h2 className="mt-4 text-2xl font-bold text-primary md:text-3xl">Devolução grátis em até 7 dias</h2>
+          <p className="mt-3 text-muted-foreground">Se você não gostar do material, pode pedir o reembolso em até 7 dias após a compra, direto pela plataforma de pagamento.</p>
+        </div>
+      </Section>
+
       {/* FAQ */}
       <Section className="bg-muted">
         <Heading title="Dúvidas Frequentes" />
@@ -403,11 +467,6 @@ function Index() {
       <footer className="border-t border-primary-foreground/15 bg-primary px-5 pb-24 pt-8 text-sm text-primary-foreground/80 md:py-8">
         <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-4 md:flex-row">
           <p className="font-serif text-base font-bold text-primary-foreground">Pequenos com Deus</p>
-          <nav className="flex flex-wrap justify-center gap-5">
-            <a href="#" className="hover:text-accent">Política de Privacidade</a>
-            <a href="#" className="hover:text-accent">Termos de Uso</a>
-            <a href="#" className="hover:text-accent">Contato</a>
-          </nav>
           <p>© {new Date().getFullYear()} Todos os direitos reservados</p>
         </div>
       </footer>

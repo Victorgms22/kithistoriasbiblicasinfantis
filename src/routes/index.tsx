@@ -102,6 +102,48 @@ function Heading({ eyebrow, title, desc }: { eyebrow?: string; title: string; de
   );
 }
 
+function MobileBuyBar({ checkout }: { checkout: string }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const offer = document.getElementById("ofertas");
+    let offerVisible = false;
+    let scrolled = false;
+    const update = () => setVisible(scrolled && !offerVisible);
+    const onScroll = () => {
+      scrolled = window.scrollY > window.innerHeight;
+      update();
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const observer = offer
+      ? new IntersectionObserver((entries) => {
+          offerVisible = entries[0]?.isIntersecting ?? false;
+          update();
+        })
+      : null;
+    if (offer && observer) observer.observe(offer);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      observer?.disconnect();
+    };
+  }, []);
+  return (
+    <div
+      className={`fixed inset-x-0 bottom-0 z-50 bg-foreground/95 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur transition-transform duration-300 md:hidden ${
+        visible ? "translate-y-0" : "translate-y-full"
+      }`}
+    >
+      <a
+        href={checkout}
+        onClick={trackBuyClick}
+        className="flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-extrabold tracking-wide text-accent-foreground"
+      >
+        R$ 19,90 • COMPRAR AGORA
+      </a>
+    </div>
+  );
+}
+
 function useCountdown(start: number) {
   const [left, setLeft] = useState(start);
   useEffect(() => {
@@ -147,7 +189,7 @@ function Index() {
                   <span className="font-serif text-3xl font-bold text-primary">R$ 19,90</span>
                 </p>
                 <p className="text-sm font-bold text-secondary">Oferta termina em <span className="font-mono">{timer}</span></p>
-                <a href="#ofertas" className={ctaCls}>QUERO CONHECER O MATERIAL</a>
+                <a href={checkout} onClick={trackBuyClick} className={ctaCls}>QUERO CONHECER O MATERIAL</a>
                 <p className="text-sm text-muted-foreground">Material digital em PDF • Pronto para imprimir</p>
               </div>
             </div>
@@ -354,11 +396,11 @@ function Index() {
         <div className="mx-auto max-w-3xl">
           <h2 className="text-3xl font-bold leading-tight md:text-4xl">Comece a construir momentos especiais de fé e aprendizado!</h2>
           <p className="mt-5 text-lg opacity-85">Apresente às crianças histórias que ensinam valores, despertam a curiosidade e aproximam a família da Palavra de Deus.</p>
-          <a href="#ofertas" className={`${ctaLight} mt-8`}>QUERO MEU MATERIAL</a>
+          <a href={checkout} onClick={trackBuyClick} className={`${ctaLight} mt-8`}>QUERO MEU MATERIAL</a>
         </div>
       </section>
 
-      <footer className="border-t border-primary-foreground/15 bg-primary px-5 py-8 text-sm text-primary-foreground/80">
+      <footer className="border-t border-primary-foreground/15 bg-primary px-5 pb-24 pt-8 text-sm text-primary-foreground/80 md:py-8">
         <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-4 md:flex-row">
           <p className="font-serif text-base font-bold text-primary-foreground">Pequenos com Deus</p>
           <nav className="flex flex-wrap justify-center gap-5">
@@ -369,6 +411,7 @@ function Index() {
           <p>© {new Date().getFullYear()} Todos os direitos reservados</p>
         </div>
       </footer>
+      <MobileBuyBar checkout={checkout} />
     </main>
   );
 }

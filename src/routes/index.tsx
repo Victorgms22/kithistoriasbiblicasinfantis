@@ -116,8 +116,8 @@ function MobileBuyBar({ checkout }: { checkout: string }) {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     const observer = offer
-      ? new IntersectionObserver(([entry]) => {
-          offerVisible = entry.isIntersecting;
+      ? new IntersectionObserver((entries) => {
+          offerVisible = entries[0]?.isIntersecting ?? false;
           update();
         })
       : null;

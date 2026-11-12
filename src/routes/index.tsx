@@ -147,7 +147,7 @@ function Index() {
                   <span className="font-serif text-3xl font-bold text-primary">R$ 19,90</span>
                 </p>
                 <p className="text-sm font-bold text-secondary">Oferta termina em <span className="font-mono">{timer}</span></p>
-                <a href="#ofertas" className={ctaCls}>QUERO CONHECER O MATERIAL</a>
+                <a href={checkout} onClick={trackBuyClick} className={ctaCls}>QUERO CONHECER O MATERIAL</a>
                 <p className="text-sm text-muted-foreground">Material digital em PDF • Pronto para imprimir</p>
               </div>
             </div>
@@ -354,7 +354,7 @@ function Index() {
         <div className="mx-auto max-w-3xl">
           <h2 className="text-3xl font-bold leading-tight md:text-4xl">Comece a construir momentos especiais de fé e aprendizado!</h2>
           <p className="mt-5 text-lg opacity-85">Apresente às crianças histórias que ensinam valores, despertam a curiosidade e aproximam a família da Palavra de Deus.</p>
-          <a href="#ofertas" className={`${ctaLight} mt-8`}>QUERO MEU MATERIAL</a>
+          <a href={checkout} onClick={trackBuyClick} className={`${ctaLight} mt-8`}>QUERO MEU MATERIAL</a>
         </div>
       </section>
 

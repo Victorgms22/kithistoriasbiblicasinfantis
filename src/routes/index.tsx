@@ -400,7 +400,7 @@ function Index() {
         </div>
       </section>
 
-      <footer className="border-t border-primary-foreground/15 bg-primary px-5 py-8 text-sm text-primary-foreground/80">
+      <footer className="border-t border-primary-foreground/15 bg-primary px-5 pb-24 pt-8 text-sm text-primary-foreground/80 md:py-8">
         <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-4 md:flex-row">
           <p className="font-serif text-base font-bold text-primary-foreground">Pequenos com Deus</p>
           <nav className="flex flex-wrap justify-center gap-5">
@@ -411,6 +411,7 @@ function Index() {
           <p>© {new Date().getFullYear()} Todos os direitos reservados</p>
         </div>
       </footer>
+      <MobileBuyBar checkout={checkout} />
     </main>
   );
 }
